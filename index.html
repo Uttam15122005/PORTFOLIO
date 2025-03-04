@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uttam Kumar - Portfolio</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Utility classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.sticky {
+            padding: 15px 0;
+            background-color: rgba(44, 62, 80, 0.9);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #3498db;
+        }
+
+        .nav-toggler {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #3498db;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://via.placeholder.com/1920x1080');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .hero-cta {
+            animation: fadeIn 1s ease 1s forwards;
+            opacity: 0;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            color: white;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down:hover {
+            color: #3498db;
+        }
+
+        /* About section */
+        .about {
+            background-color: white;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        /* Skills section */
+        .skills {
+            background-color: #f9f9f9;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .skill-text {
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s ease;
+        }
+
+        /* Projects section */
+        .projects {
+            background-color: white;
+        }
+
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            margin: 5px;
+            background: transparent;
+            border: 2px solid #3498db;
+            color: #3498db;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-box {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .project-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(52, 152, 219, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-box:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .project-box:hover .project-title {
+            transform: translateY(0);
+        }
+
+        .project-category {
+            color: #ecf0f1;
+            margin-bottom: 20px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease 0.1s;
+        }
+
+        .project-box:hover .project-category {
+            transform: translateY(0);
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #3498db;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: transform 0.3s ease 0.2s, background 0.3s ease;
+        }
+
+        .project-box:hover .project-link {
+            transform: translateY(0);
+        }
+
+        .project-link:hover {
+            background: #f5f5f5;
+        }
+
+        /* Contact section */
+        .contact {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://via.placeholder.com/1920x1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: #3498db;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 15px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #3498db;
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .footer-text {
+            margin-bottom: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-30px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-15px) translateX(-50%);
+            }
+        }
+
+        /* Media queries */
+        @media screen and (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggler {
+                display: block;
+            }
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: #2c3e50;
+                transition: 0.5s;
+                padding: 20px;
+            }
+            nav.active {
+                left: 0;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 15px 0;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Uttam<span>Kumar</span></a>
+            <div class="nav-toggler" id="navToggler">☰</div>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Welcome to My Portfolio</h1>
+            <p class="hero-subtitle">Web Developer & Software Engineer | Creating Functional & Beautiful Solutions</p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn">Get In Touch</a>
+            </div>
+        </div>
+        <a href="#about" class="scroll-down">↓</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="uttam2.jpg" alt="Uttam Kumar">
+                </div>
+                <div class="about-text">
+                    <h3>Hi, I'm Uttam Kumar</h3>
+                    <p>
+                        I'm a passionate software developer and web engineer with expertise in various programming 
+                        languages and technologies. My background in data structures, algorithms, and object-oriented 
+                        programming allows me to create efficient and scalable solutions for complex problems.
+                    </p>
+                    <p>
+                        I specialize in full-stack development with a focus on creating responsive web applications
+                        and content management systems. My experience with WordPress, database management, and network
+                        systems enables me to deliver comprehensive solutions that meet client needs from backend
+                        functionality to frontend design.
+                    </p>
+                    <p>
+                        I'm constantly improving my skills and staying updated with the latest technologies 
+                        to deliver innovative solutions for today's digital challenges.
+                    </p>
+                    <a href="#contact" class="btn">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills">
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            <div class="skills-container">
+                <!-- Data Structures & Algorithms -->
+                <div class="skill-box">
+                    <div class="skill-icon">🧩</div>
+                    <h3 class="skill-title">Data Structures & Algorithms</h3>
+                    <p class="skill-text">
+                        Proficient in implementing efficient algorithms and optimizing data structures for complex problems.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="90"></div>
+                    </div>
+                </div>
+                
+                <!-- WordPress Development -->
+                <div class="skill-box">
+                    <div class="skill-icon">🌐</div>
+                    <h3 class="skill-title">WordPress Development</h3>
+                    <p class="skill-text">
+                        Creating custom themes, plugins, and complete WordPress solutions for various business needs.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="85"></div>
+                    </div>
+                </div>
+                
+                <!-- Programming Languages -->
+                <div class="skill-box">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-title">C++ Programming</h3>
+                    <p class="skill-text">
+                        Building robust applications and systems using advanced C++ techniques and libraries.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="88"></div>
+                    </div>
+                </div>
+                
+                <!-- Object-Oriented Programming -->
+                <div class="skill-box">
+                    <div class="skill-icon">🔄</div>
+                    <h3 class="skill-title">Object-Oriented Programming</h3>
+                    <p class="skill-text">
+                        Designing maintainable and scalable software using OOP principles and design patterns.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="92"></div>
+                    </div>
+                </div>
+                
+                <!-- Microsoft Office -->
+                <div class="skill-box">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-title">Microsoft Excel & PowerPoint</h3>
+                    <p class="skill-text">
+                        Advanced data analysis, reporting, and professional presentation creation.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="85"></div>
+                    </div>
+                </div>
+                
+                <!-- Computer Networks -->
+                <div class="skill-box">
+                    <div class="skill-icon">🌐</div>
+                    <h3 class="skill-title">Computer Networks</h3>
+                    <p class="skill-text">
+                        Understanding network architecture, protocols, and implementation of networked applications.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="80"></div>
+                    </div>
+                </div>
+                
+                <!-- HTML Skill -->
+                <div class="skill-box">
+                    <div class="skill-icon">📝</div>
+                    <h3 class="skill-title">HTML</h3>
+                    <p class="skill-text">
+                        Crafting clean, semantic markup for optimal structure and accessibility.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="95"></div>
+                    </div>
+                </div>
+                
+                <!-- CSS Skill -->
+                <div class="skill-box">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-title">CSS</h3>
+                    <p class="skill-text">
+                        Creating beautiful designs with modern CSS techniques and frameworks.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="90"></div>
+                    </div>
+                </div>
+                
+                <!-- JavaScript Skill -->
+                <div class="skill-box">
+                    <div class="skill-icon">⚙️</div>
+                    <h3 class="skill-title">JavaScript</h3>
+                    <p class="skill-text">
+                        Building interactive and dynamic web experiences.
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress" data-percentage="85"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Apps</button>
+                <button class="filter-btn" data-filter="system">Management Systems</button>
+                <button class="filter-btn" data-filter="data">Data Analysis</button>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Conference Room Management System -->
+                <div class="project-box" data-category="system">
+                    <img src="image1.png" alt="Conference Room Management System" class="project-image">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Conference Room Management System</h3>
+                        <p class="project-category">Management System</p>
+                        <a href="https://uttam15122005.github.io/Conferences-Room-Management-System/" class="https://uttam15122005.github.io/Conferences-Room-Management-System/">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Web Application mimicking Google Sheets -->
+                <div class="project-box" data-category="web">
+                    <img src="image2.png" alt="Web Spreadsheet Application" class="project-image">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Web Spreadsheet Application</h3>
+                        <p class="project-category">Web App</p>
+                        <a href="https://uttam15122005.github.io/Web-Application-Mimicking-Google-Sheets/" class="https://uttam15122005.github.io/Web-Application-Mimicking-Google-Sheets/">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Chatbot Support -->
+                <div class="project-box" data-category="web">
+                    <img src="image3.png" alt="Support Chatbot" class="project-image">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Support Chatbot</h3>
+                        <p class="project-category">Web App</p>
+                        <a href="https://github.com/Uttam15122005/Building-a-Support-Agent-Chatbot-for-CDP" class="https://github.com/Uttam15122005/Building-a-Support-Agent-Chatbot-for-CDP">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- Ecommerce Data Analysis -->
+                <div class="project-box" data-category="data">
+                    <img src="image4.png" alt="Ecommerce Data Analysis" class="project-image">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Ecommerce Data Analysis</h3>
+                        <p class="project-category">Data Analysis</p>
+                        <a href="https://github.com/Uttam15122005/Ecommerce-Data-Analysis-?tab=readme-ov-file" class="https://github.com/Uttam15122005/Ecommerce-Data-Analysis-?tab=readme-ov-file">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- News Website -->
+                <div class="project-box" data-category="web">
+                    <img src="image5.png" alt="News Website" class="project-image">
+                    <div class="project-overlay">
+                        <h3 class="project-title">News Website</h3>
+                        <p class="project-category">Web App</p>
+                        <a href="https://github.com/Uttam15122005/News-web" class="https://github.com/Uttam15122005/News-web">View Project</a>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p>Feel free to reach out to me for any questions or opportunities.</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <p>Tamil Nadu, India</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <p>uttamstm15122005@gmail.com</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <p>+91 8936012715</p>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/uttam-kumar-a26630341/" class="social-link">ld</a>
+                        <a href="https://github.com/Uttam15122005" class="social-link">gh</a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send A Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">&copy; 2025 Uttam Kumar. All Rights Reserved.</p>
+            <p>Designed with ❤️ by Uttam Kumar</p>
+        </div>
+    </footer>
+
+   <script>
+    // DOM Elements
+    const header = document.getElementById('header');
+    const navToggler = document.getElementById('navToggler');
+    const navbar = document.getElementById('navbar');
+    const progressBars = document.querySelectorAll('.progress');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectBoxes = document.querySelectorAll('.project-box');
+    const contactForm = document.getElementById('contactForm');
+
+    // Sticky Header
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header.classList.add('sticky');
+        } else {
+            header.classList.remove('sticky');
+        }
+
+        // Progress bars animation on scroll
+        if (isElementInViewport(document.querySelector('.skills'))) {
+            progressBars.forEach(progress => {
+                const percentage = progress.getAttribute('data-percentage');
+                progress.style.width = percentage + '%';
+            });
+        }
+    });
+
+    // Mobile menu toggle
+    navToggler.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            navbar.classList.remove('active');
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - header.offsetHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Helper function to check if an element is in the viewport
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+</script>
